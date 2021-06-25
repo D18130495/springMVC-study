@@ -35,6 +35,12 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.2</version>
+        </dependency>
     </dependencies>
 ```
 
