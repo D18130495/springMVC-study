@@ -7,6 +7,8 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
 4. web.xml
 5. springmvc-servlet.xml(annotation)
 6. Controller
+7. Forward and redirect
+8. URL parameter(Same like mybatis @param(" "))
 
 ### 3. Maven dependencies
 ``` xml
@@ -115,7 +117,7 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
     }
 ```
 
-### Forward and redirect
+### 7. Forward and redirect
 ``` java
     @RequestMapping("/t1")
     public String test(Model model) {
@@ -136,7 +138,7 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
     }
 ```
 
-### URL parameter(Same like mybatis @param)
+### 8. URL parameter(Same like mybatis @param(" "))
 ``` java
     @RequestMapping("/t1")
     public String test(@RequestParam("username") String name, Model model) {
@@ -145,4 +147,21 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
     
         return "test";
     }
+```
+
+### Character encoding
+``` xml
+    <filter>
+        <filter-name>encoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 ```
