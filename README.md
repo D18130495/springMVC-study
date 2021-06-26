@@ -165,3 +165,99 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 ```
+
+# Json
+
+### Maven dependency
+``` xml
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+    </dependencies>
+```
+
+### web.xml
+``` xml
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                        <property name="failOnEmptyBeans" value="false"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+```
+
+### controller
+``` java
+    @RequestMapping("/j1")
+    @ResponseBody
+    public String json1() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        User user = new User("潜江一号", 23,"男");
+
+        return mapper.writeValueAsString(user);
+    }
+    
+        @RequestMapping("/j2")
+    @ResponseBody
+    public String json2() throws JsonProcessingException {
+        List<User> list = new ArrayList<User>();
+
+        User user1 = new User("潜江一号", 23,"男");
+        User user2 = new User("潜江二号", 23,"男");
+        User user3 = new User("潜江三号", 23,"男");
+        User user4 = new User("潜江四号", 23,"男");
+
+        list.add(user1);
+        list.add(user2);
+        list.add(user3);
+        list.add(user4);
+
+        return JsonUtils.getJson(list);
+    }
+
+    @RequestMapping("/j3")
+    @ResponseBody
+    public String json3() throws JsonProcessingException {
+        Date date = new Date();
+
+        return JsonUtils.getJson(date, "yyyy-MM-dd HH:mm:ss");
+    }
+```
+
+### Json util
+``` java
+    public class JsonUtils {
+        public static String getJson(Object object) {
+            return getJson(object, "yyyy-MM-dd HH:mm:ss");
+        }
+    
+        public static String getJson(Object object, String format){
+            ObjectMapper mapper = new ObjectMapper();
+    
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            mapper.setDateFormat(sdf);
+    
+            try {
+                return mapper.writeValueAsString(object);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return  null;
+        }
+    }
+
+```

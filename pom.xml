@@ -13,6 +13,7 @@
         <module>springMVC-02-helloMVC</module>
         <module>springMVC-03-annotation</module>
         <module>springMVC-04-controller</module>
+        <module>springMVC-05-json</module>
     </modules>
 
     <dependencies>
@@ -46,5 +47,4 @@
             <version>2.2</version>
         </dependency>
     </dependencies>
-
 </project>
