@@ -114,3 +114,35 @@ Official website: https://docs.spring.io/spring-framework/docs/current/reference
         }
     }
 ```
+
+### Forward and redirect
+``` java
+    @RequestMapping("/t1")
+    public String test(Model model) {
+
+        model.addAttribute("msg", "hello");
+
+        return "test";
+    }
+```
+
+``` java
+    @RequestMapping("/t1")
+    public String test(Model model) {
+
+        model.addAttribute("msg", "hello");
+
+        return "redirect:index.jsp";
+    }
+```
+
+### URL parameter(Same like mybatis @param)
+``` java
+    @RequestMapping("/t1")
+    public String test(@RequestParam("username") String name, Model model) {
+    
+        model.addAttribute("msg", name);
+    
+        return "test";
+    }
+```
